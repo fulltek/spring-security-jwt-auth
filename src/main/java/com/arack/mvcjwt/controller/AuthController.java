@@ -4,7 +4,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +24,6 @@ public class AuthController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
-	private AuthenticationManager authenticationManager;
-	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	@Autowired
 	private UserService userService;
@@ -43,20 +40,6 @@ public class AuthController {
 			}
 		} else
 			return ResponseEntity.badRequest().body(new LoginResponse("登录凭据无效"));
-
-		/*
-		 * try { System.err.println(111); Authentication authenticate =
-		 * authenticationManager.authenticate( new
-		 * UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-		 * loginRequest.getPassword())); System.err.println(222); User user = (User)
-		 * authenticate.getPrincipal(); System.err.println(333); return
-		 * ResponseEntity.ok().contentType(APPLICATION_JSON) //
-		 * .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
-		 * .body(new LoginResponse(user.getUsername(),
-		 * jwtTokenUtil.generateAccessToken(user))); } catch (BadCredentialsException
-		 * ex) { // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		 * return ResponseEntity.badRequest().body(new LoginResponse("登录凭据无效")); }
-		 */
 	}
 
 	@PostMapping("signup")
